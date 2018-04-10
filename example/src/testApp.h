@@ -23,5 +23,6 @@ class testApp : public ofBaseApp{
     
     private:
         itg::ofxStateMachine<SharedData> stateMachine;
+        bool switchEvents = true;
 		
 };

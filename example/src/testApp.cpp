@@ -4,10 +4,14 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
+    
+    // setup events
+    stateMachine.setup(OF_EVENT_ORDER_BEFORE_APP, OF_EVENT_ORDER_BEFORE_APP);
+    
 	// setup shared data
-	stateMachine.getSharedData().counter = 0;
-	stateMachine.getSharedData().lastUpdate = ofGetElapsedTimeMillis();
-	stateMachine.getSharedData().font.load("vag.ttf", 50);
+	stateMachine.getShared().counter = 0;
+	stateMachine.getShared().lastUpdate = ofGetElapsedTimeMillis();
+	stateMachine.getShared().font.load("vag.ttf", 50);
 	
 	// initialise state machine
 	stateMachine.addState<RedState>();
@@ -16,14 +20,15 @@ void testApp::setup(){
 }
 
 //--------------------------------------------------------------
-void testApp::update(){
-
+void testApp::update()
+{
+  
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
     ofSetColor(0, 0, 0);
-    ofDrawBitmapString("Mouse click changes state", 20, 20);
+    ofDrawBitmapString("This text is drawn in testApp.\nKey released changes event order.\nMouse click changes state.", 20, 20);
 }
 
 //--------------------------------------------------------------
@@ -32,8 +37,14 @@ void testApp::keyPressed(int key){
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
-
+void testApp::keyReleased(int key)
+{
+    stateMachine.disableAppEvents();
+    
+    if (switchEvents) stateMachine.setup(OF_EVENT_ORDER_AFTER_APP, OF_EVENT_ORDER_AFTER_APP);
+    else stateMachine.setup(OF_EVENT_ORDER_BEFORE_APP, OF_EVENT_ORDER_BEFORE_APP);
+    
+    switchEvents = !switchEvents;
 }
 
 //--------------------------------------------------------------

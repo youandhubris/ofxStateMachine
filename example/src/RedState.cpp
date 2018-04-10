@@ -33,10 +33,10 @@
 
 void RedState::update()
 {
-	if (ofGetElapsedTimeMillis() - getSharedData().lastUpdate > 1000)
+	if (ofGetElapsedTimeMillis() - getShared().lastUpdate > 1000)
 	{
-		getSharedData().counter--;
-		getSharedData().lastUpdate = ofGetElapsedTimeMillis();
+		getShared().counter--;
+		getShared().lastUpdate = ofGetElapsedTimeMillis();
 	}
 }
 
@@ -44,7 +44,7 @@ void RedState::draw()
 {
 	ofBackground(255, 0, 0);
 	ofSetColor(0, 255, 0);
-	getSharedData().font.drawString(ofToString(getSharedData().counter), ofGetWidth() >> 1, ofGetHeight() >> 1);
+	getShared().font.drawString(ofToString(getShared().counter), ofGetWidth() >> 1, ofGetHeight() >> 1);
 }
 
 void RedState::mousePressed(int x, int y, int button)
