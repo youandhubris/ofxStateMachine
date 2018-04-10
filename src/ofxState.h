@@ -81,7 +81,7 @@ namespace itg
 	
 		virtual ~ofxState() {}
 		
-        SharedData& getSharedData() { return *sharedData; }
+        SharedData& getShared() { return *sharedData; }
 		void setSharedData(SharedData* sharedData) { this->sharedData = sharedData; }
 		
 	private:

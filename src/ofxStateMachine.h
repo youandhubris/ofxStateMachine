@@ -42,16 +42,18 @@ namespace itg
 		typedef shared_ptr< ofxState<SharedData> > StatePtr;
 		typedef typename map<string, StatePtr>::iterator stateIt;
 		
-		ofxStateMachine()
-		{
-			enableAppEvents();
+		ofxStateMachine() {}
+        
+        void setup(ofEventOrder updatePriority = OF_EVENT_ORDER_AFTER_APP, ofEventOrder drawPriority = OF_EVENT_ORDER_AFTER_APP)
+        {
+            enableAppEvents(updatePriority, drawPriority);
 #ifdef TARGET_OPENGLES
-			enableTouchEvents();
+            enableTouchEvents();
 #else
-			enableMouseEvents();
-			enableKeyEvents();
+            enableMouseEvents();
+            enableKeyEvents();
 #endif
-		}
+        }
         
         template<class T>
         StatePtr addState()
@@ -81,7 +83,7 @@ namespace itg
 			return addState(ptr);
 		}
 		
-		SharedData& getSharedData()
+		SharedData& getShared()
 		{
 			return sharedData;
 		}
@@ -107,12 +109,17 @@ namespace itg
 				currentState->stateEnter();
 			}
 		}
+        
+        string getCurrentState()
+        {
+            return currentState->getName();
+        }
 		
 		/** App Event Stuff **/
-		void enableAppEvents()
+		void enableAppEvents(ofEventOrder updatePriority, ofEventOrder drawPriority)
 		{
-			ofAddListener(ofEvents().update, this, &ofxStateMachine::onUpdate);
-			ofAddListener(ofEvents().draw, this, &ofxStateMachine::onDraw);
+			ofAddListener(ofEvents().update , this, &ofxStateMachine::onUpdate, updatePriority);
+			ofAddListener(ofEvents().draw, this, &ofxStateMachine::onDraw, drawPriority);
 		}
         
         void disableAppEvents()
