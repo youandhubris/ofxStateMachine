@@ -1,5 +1,17 @@
 ofxStateMachine
 ===========
+Custom setup to control event order:
+```cpp
+stateMachine.setup(OF_EVENT_ORDER_AFTER_APP, OF_EVENT_ORDER_AFTER_APP);
+// or stateMachine.setup(OF_EVENT_ORDER_BEFORE_APP, OF_EVENT_ORDER_BEFORE_APP);
+```
+To update/draw before/after the main OF state. Check updated example.
+
+Also, renamed getSharedData() to getShared().
+
+The original readme follows:
+
+
 ofxStateMachine is intended to help organise code for complex projects.  Each state is essentially a mini OF app and you can override **setup()**, **update()** and so on in the same way.
 
 Use
@@ -43,19 +55,19 @@ itg::ofxStateMachine<MySharedData> stateMachine;
 class MyState : public itg::ofxState<MySharedData>
 ```
 
-To access shared data from within a state simple call **getSharedData()**...
+To access shared data from within a state simple call **getShared()**...
 
 ```cpp
 void MyState::update()
 {
-  getSharedData().doStuff();
+  getShared().doStuff();
 }
 ```
 
 ...it can also be accessed from the state machine by calling...
 
 ```cpp
-stateMachine.getSharedData();
+stateMachine.getShared();
 ```
 Changing States
 ===============
